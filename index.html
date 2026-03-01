@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Raj Yadav — Portfolio & Resume</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #141414;
+    --card: #1a1a1a;
+    --accent: #e8c46a;
+    --accent2: #c9a84c;
+    --text: #f0ede8;
+    --muted: #888;
+    --border: #2a2a2a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Animated background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 10% 20%, rgba(232,196,106,0.06) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 90% 80%, rgba(232,196,106,0.04) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 0 60px;
+    position: relative;
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 10vw, 100px);
+    font-weight: 900;
+    line-height: 0.92;
+    letter-spacing: -2px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  h1 .gold { color: var(--accent); }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .contact-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 13px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: all 0.3s;
+    background: var(--surface);
+  }
+
+  .contact-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232,196,106,0.05);
+    transform: translateY(-2px);
+  }
+
+  .contact-pill .icon { font-size: 15px; }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 40px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
+
+  /* SKILLS GRID */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1px;
+    border: 1px solid var(--border);
+    background: var(--border);
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .skill-item {
+    background: var(--card);
+    padding: 28px 24px;
+    transition: background 0.3s;
+  }
+
+  .skill-item:hover { background: #202020; }
+
+  .skill-icon { font-size: 28px; margin-bottom: 12px; }
+
+  .skill-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .skill-sub {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  /* EXPERIENCE */
+  .exp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--accent);
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 0.4s ease;
+  }
+
+  .exp-card:hover::before { transform: scaleY(1); }
+  .exp-card:hover { border-color: #333; transform: translateX(4px); }
+
+  .exp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .exp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .exp-badge {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    background: rgba(232,196,106,0.1);
+    color: var(--accent);
+    border-radius: 100px;
+    border: 1px solid rgba(232,196,106,0.2);
+    white-space: nowrap;
+  }
+
+  .exp-desc {
+    font-size: 15px;
+    color: #aaa;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .exp-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: gap 0.2s;
+  }
+
+  .exp-link:hover { gap: 12px; }
+
+  /* EDUCATION */
+  .edu-timeline {
+    position: relative;
+    padding-left: 28px;
+  }
+
+  .edu-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 8px; bottom: 8px;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+
+  .edu-item {
+    margin-bottom: 36px;
+    position: relative;
+  }
+
+  .edu-item::before {
+    content: '';
+    position: absolute;
+    left: -32px;
+    top: 7px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(232,196,106,0.4);
+  }
+
+  .edu-degree {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .edu-detail {
+    font-size: 14px;
+    color: var(--muted);
+  }
+
+  .edu-status {
+    display: inline-block;
+    font-size: 11px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    margin-top: 8px;
+    border-radius: 4px;
+    background: rgba(232,196,106,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(232,196,106,0.15);
+  }
+
+  /* LANGUAGES */
+  .lang-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .lang-card {
+    flex: 1;
+    min-width: 160px;
+    padding: 28px 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+
+  .lang-card:hover { border-color: var(--accent); }
+
+  .lang-flag { font-size: 36px; margin-bottom: 12px; }
+
+  .lang-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .lang-level { font-size: 12px; color: var(--muted); }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 40px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: gap;
+    gap: 20px;
+  }
+
+  .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--accent);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* DIVIDER */
+  .gold-line {
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 600px) {
+    h1 { letter-spacing: -1px; }
+    .exp-card { padding: 24px 20px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <p class="hero-label">Resume &amp; Portfolio</p>
+    <h1>Raj<br><span class="gold">Yadav.</span></h1>
+    <p class="hero-desc">Content Creator · Academic Notes Specialist · Digital Marketing &amp; AI Tools Enthusiast. Based in Bodh Gaya, Bihar.</p>
+    <div class="contact-row">
+      <a href="tel:9798680204" class="contact-pill"><span class="icon">📞</span> 9798680204</a>
+      <a href="mailto:rajyadav23022025@gmail.com" class="contact-pill"><span class="icon">📧</span> rajyadav23022025@gmail.com</a>
+      <span class="contact-pill"><span class="icon">📍</span> Bodh Gaya, Gaya, Bihar</span>
+    </div>
+    <div class="scroll-hint">Scroll to explore</div>
+  </div>
+</header>
+
+<!-- SKILLS -->
+<section>
+  <div class="container">
+    <p class="section-label reveal">What I Do</p>
+    <h2 class="reveal">Skills &amp;<br>Expertise</h2>
+    <div class="gold-line reveal"></div>
+    <div class="skills-grid reveal">
+      <div class="skill-item">
+        <div class="skill-icon">📝</div>
+        <div class="skill-name">MS Word &amp; Excel</div>
+        <div class="skill-sub">Document &amp; Data</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">PowerPoint</div>
+        <div class="skill-sub">Presentations</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon">🎬</div>
+        <div class="skill-name">Video Editing</div>
+        <div class="skill-sub">Content Creation</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon">📚</div>
+        <div class="skill-name">Notes Making</div>
+        <div class="skill-sub">All Subjects</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon">🤖</div>
+        <div class="skill-name">AI-based Notes</div>
+        <div class="skill-sub">Improvement &amp; Design</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon">📱</div>
+        <div class="skill-name">Meta Ads</div>
+        <div class="skill-sub">Digital Marketing</div>
+      </div>
+      <div class="skill-item">
+        <div class="skill-icon">💻</div>
+        <div class="skill-name">Basic Coding</div>
+        <div class="skill-sub">Web &amp; Logic</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section>
+  <div class="container">
+    <p class="section-label reveal">Work History</p>
+    <h2 class="reveal">Experience</h2>
+    <div class="gold-line reveal"></div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div class="exp-title">Academic Notes Creator</div>
+        <span class="exp-badge">1+ Year</span>
+      </div>
+      <p class="exp-desc">
+        Created high-quality academic notes for multiple subjects for <strong>Offline Coaching</strong> and <strong>SGS Classes (YouTube)</strong>. Leveraged AI tools to enhance clarity, structure, and visual design of study materials — helping thousands of students learn more effectively.
+      </p>
+      <a href="https://drive.google.com/drive/folders/11ZrsDX7_I8bjzXh8bMGnoKRcMmLdeMr8?usp=sharing" target="_blank" class="exp-link">
+        View Sample Notes on Drive →
+      </a>
+    </div>
+
+    <div class="exp-card reveal">
+      <div class="exp-header">
+        <div class="exp-title">Meta Ads Specialist</div>
+        <span class="exp-badge">Marketing</span>
+      </div>
+      <p class="exp-desc">
+        Hands-on experience running and managing Meta (Facebook &amp; Instagram) advertising campaigns. Understanding of audience targeting, ad creatives, and campaign optimization for digital marketing goals.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section>
+  <div class="container">
+    <p class="section-label reveal">Academic Journey</p>
+    <h2 class="reveal">Education</h2>
+    <div class="gold-line reveal"></div>
+    <div class="edu-timeline reveal">
+      <div class="edu-item">
+        <div class="edu-degree">12th — Science Stream</div>
+        <div class="edu-detail">Bihar School Examination Board</div>
+        <span class="edu-status">Completed</span>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">B.A. — Economics</div>
+        <div class="edu-detail">Undergraduate Program</div>
+        <span class="edu-status">Currently Pursuing</span>
+      </div>
+      <div class="edu-item">
+        <div class="edu-degree">BCA — Bachelor of Computer Applications</div>
+        <div class="edu-detail">Planned Admission · Next Month</div>
+        <span class="edu-status">Upcoming</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section>
+  <div class="container">
+    <p class="section-label reveal">Communication</p>
+    <h2 class="reveal">Languages</h2>
+    <div class="gold-line reveal"></div>
+    <div class="lang-grid reveal">
+      <div class="lang-card">
+        <div class="lang-flag">🇮🇳</div>
+        <div class="lang-name">Hindi</div>
+        <div class="lang-level">Native</div>
+      </div>
+      <div class="lang-card">
+        <div class="lang-flag">🇬🇧</div>
+        <div class="lang-name">English</div>
+        <div class="lang-level">Proficient</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
+    <div class="footer-name">Raj Yadav</div>
+    <div class="footer-copy">📍 Bodh Gaya, Gaya, Bihar &nbsp;|&nbsp; rajyadav23022025@gmail.com</div>
+  </div>
+</footer>
+
+<script>
+  // Intersection Observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
